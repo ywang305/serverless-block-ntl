@@ -10,6 +10,8 @@ export const handler: Handler = async (event, context) => {
 
   const jsonBody = JSONParser.parse(body);
 
+  const pathparser = require("path").parse(__filename);
+
   return {
     statusCode: 200,
     body: JSON.stringify({
@@ -22,6 +24,8 @@ export const handler: Handler = async (event, context) => {
       context,
       __filename,
       __dirname,
+      filename: require("path").basename(__filename),
+      pathparser,
     }),
   };
 };
