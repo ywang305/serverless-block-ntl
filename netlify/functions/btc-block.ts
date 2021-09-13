@@ -6,15 +6,25 @@ import { errorHandler } from "../share/middle/error-handler";
 
 export const _handler: Handler = async (event) => {
   const {
-    queryStringParameters: { hash },
+    queryStringParameters: { hash, height },
   } = event;
 
-  const payload = {
-    jsonrpc: "2.0",
-    id: "getblock.io",
-    method: "getblock",
-    params: [hash, 1],
-  };
+  let payload;
+  if (hash) {
+    payload = {
+      jsonrpc: "2.0",
+      id: "getblock.io",
+      method: "getblock",
+      params: [hash, 2],
+    };
+  } else if (height) {
+    payload = {
+      jsonrpc: "2.0",
+      id: "getblock.io",
+      method: "getblockhash",
+      params: [height],
+    };
+  }
 
   const { data } = await axios.post(GETBLOCK_BTC_URL, payload, {
     headers: {

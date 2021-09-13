@@ -17,14 +17,14 @@ import { errorHandler } from "../share/middle/error-handler";
 
 const _handler: Handler = async (event) => {
   const {
-    body: { hexString },
+    body: { signedTx },
   } = event;
 
   const payload = {
     jsonrpc: "2.0",
     id: "getblock.io",
     method: "sendrawtransaction",
-    params: [hexString, null],
+    params: [signedTx, null],
   };
 
   await axios.post(GETBLOCK_BTC_URL, payload, {
