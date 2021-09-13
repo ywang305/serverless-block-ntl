@@ -1,31 +1,35 @@
-import { Handler } from "@netlify/functions";
-import { JSONParser } from "../../share/JSONParser";
+import middy from "@middy/core";
+import { Handler } from "aws-lambda";
+import httpJsonBodyParser from "@middy/http-json-body-parser";
 
-const PATH = "/hello-";
-
-export const handler: Handler = async (event, context) => {
+const _handler: Handler = async (event, context) => {
   const { name = "corgi friends" } = event.queryStringParameters;
 
-  const { body, httpMethod, path } = event;
-
-  const jsonBody = JSONParser.parse(body);
-
-  const pathparser = require("path").parse(__filename);
-
+  const { httpMethod, path, body } = event;
   return {
     statusCode: 200,
     body: JSON.stringify({
       message: `Hello, ${name}!`,
-      testKey: process.env.TEST_KEY,
       method: httpMethod,
       path,
-      echoBody: jsonBody,
       event,
       context,
       __filename,
       __dirname,
-      filename: require("path").basename(__filename),
-      pathparser,
+      pathparser: require("path").parse(__filename),
+      reqBody: body,
+      env: process.env.NETLIFY_LOCAL
+        ? {
+            ...process.env,
+          }
+        : {
+            ...Object.keys(process.env).reduce((a, c) => {
+              a[c] = "不让看";
+              return a;
+            }, {}),
+          },
     }),
   };
 };
+
+export const handler = middy(_handler).use(httpJsonBodyParser());
