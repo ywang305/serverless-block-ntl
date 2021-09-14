@@ -5,15 +5,11 @@ import { GETBLOCK_API_KEY, GETBLOCK_BTC_URL } from "../config/keys";
 import { errorHandler } from "../share/middle/error-handler";
 
 export const _handler: Handler = async (event) => {
-  const {
-    queryStringParameters: { hash },
-  } = event;
-
   const payload = {
     jsonrpc: "2.0",
+    method: "getblockcount",
+    params: [],
     id: "getblock.io",
-    method: "getblock",
-    params: [hash, 2], // 2 返回 tx list
   };
 
   const { data } = await axios.post(GETBLOCK_BTC_URL, payload, {
@@ -29,5 +25,3 @@ export const _handler: Handler = async (event) => {
 };
 
 export const handler = middy(_handler).use(errorHandler());
-
-//curl --user myusername --data-binary '{"jsonrpc": "1.0", "id": "curltest", "method": "getblock", "params": ["00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09"]}' -H 'content-type: text/plain;' http://127.0.0.1:8332/

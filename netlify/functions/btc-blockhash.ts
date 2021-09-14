@@ -6,14 +6,14 @@ import { errorHandler } from "../share/middle/error-handler";
 
 export const _handler: Handler = async (event) => {
   const {
-    queryStringParameters: { hash },
+    queryStringParameters: { height },
   } = event;
 
   const payload = {
     jsonrpc: "2.0",
     id: "getblock.io",
-    method: "getblock",
-    params: [hash, 2], // 2 返回 tx list
+    method: "getblockhash",
+    params: [height],
   };
 
   const { data } = await axios.post(GETBLOCK_BTC_URL, payload, {
@@ -29,5 +29,3 @@ export const _handler: Handler = async (event) => {
 };
 
 export const handler = middy(_handler).use(errorHandler());
-
-//curl --user myusername --data-binary '{"jsonrpc": "1.0", "id": "curltest", "method": "getblock", "params": ["00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09"]}' -H 'content-type: text/plain;' http://127.0.0.1:8332/

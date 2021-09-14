@@ -2,18 +2,17 @@
 
 import { Handler } from "@netlify/functions";
 import axios from "axios";
-import { GETBLOCK_API_KEY, GETBLOCK_BTC_URL } from "../config/keys";
+import { BITCORE_API_BTC_BASEURL } from "../config/keys";
 
-const makeUtxoUrl = (address) => {
-  return `https://api.bitcore.io/api/BTC/testnet/address/${address}`;
-};
+const makeUtxoUrlByAddress = (address) =>
+  `${BITCORE_API_BTC_BASEURL}/address/${address}`;
 
 export const handler: Handler = async (event) => {
   const {
     queryStringParameters: { address },
   } = event;
 
-  const { data: txList } = await axios.get(makeUtxoUrl(address));
+  const { data: txList } = await axios.get(makeUtxoUrlByAddress(address));
   const utxoList = txList.filter((data) => !data.spentTxid);
 
   return {
