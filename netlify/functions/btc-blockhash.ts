@@ -13,7 +13,7 @@ export const _handler: Handler = async (event) => {
     jsonrpc: "2.0",
     id: "getblock.io",
     method: "getblockhash",
-    params: [height],
+    params: [Number(height)],
   };
 
   const { data } = await axios.post(GETBLOCK_BTC_URL, payload, {
