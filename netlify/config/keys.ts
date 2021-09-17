@@ -5,3 +5,15 @@ export const GETBLOCK_BTC_URL: string = "https://btc.getblock.io/testnet/";
 
 export const BITCORE_API_BTC_BASEURL: string =
   "https://api.bitcore.io/api/BTC/testnet";
+
+const BITCORE_BASE_URL = "https://api.bitcore.io/api";
+export const INSIGHT_COIN_URL = {
+  BTC: {
+    MAINNET: BITCORE_BASE_URL + "/BTC/mainnet",
+    TESTNET: BITCORE_BASE_URL + "/BTC/testnet",
+  },
+  DOGE: {
+    MAINNET: BITCORE_BASE_URL + "/DOGE/mainnet",
+    TESTNET: BITCORE_BASE_URL + "/DOGE/testnet",
+  },
+};

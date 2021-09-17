@@ -1,13 +1,14 @@
 export const errorHandler = (opt = {}) => {
   const httpErrorHandlerMiddlewareOnError = (request) => {
     const { error } = request;
+    const statusCode = error.response?.status ?? 500;
     const response = {
-      statusCode: error.response.status,
+      statusCode,
       body: JSON.stringify({
         ...error,
-        code: error.response.status,
+        statusCode,
         message: error.message,
-        data: error.response.data,
+        data: error.response?.data,
       }),
     };
     return response;
