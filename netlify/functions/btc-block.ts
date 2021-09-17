@@ -1,12 +1,12 @@
 import middy from "@middy/core";
 import { Handler } from "aws-lambda";
 import axios from "axios";
-import { GETBLOCK_API_KEY, GETBLOCK_BTC_URL } from "../config/keys";
+import { GETBLOCK_API_KEY, RPC_COIN_URL } from "../config/keys";
 import { errorHandler } from "../share/middle/error-handler";
 
 export const _handler: Handler = async (event) => {
   const {
-    queryStringParameters: { hash },
+    queryStringParameters: { hash, coinType },
   } = event;
 
   const payload = {
@@ -16,7 +16,9 @@ export const _handler: Handler = async (event) => {
     params: [hash, 2], // 2 返回 tx list
   };
 
-  const { data } = await axios.post(GETBLOCK_BTC_URL, payload, {
+  const url = RPC_COIN_URL.BTC.TESTNET;
+
+  const { data } = await axios.post(url, payload, {
     headers: {
       "x-api-key": GETBLOCK_API_KEY,
     },

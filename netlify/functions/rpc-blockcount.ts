@@ -1,20 +1,17 @@
 import middy from "@middy/core";
 import { Handler } from "aws-lambda";
+import { BlockRPC } from "../share/blockio/BlockRPC";
 import { CoinNet } from "../share/Coin";
-import { InsightAPI } from "../share/insight/InsightAPI";
-
 import { errorHandler } from "../share/middle/error-handler";
 
-const _handler: Handler = async (event) => {
+export const _handler: Handler = async (event) => {
   const {
-    queryStringParameters: {
-      address,
-      coinName,
-      coinNet = CoinNet.mainnet /**可选 [mainnet, testnet] */,
-    },
+    queryStringParameters: { coinName, coinNet = CoinNet.mainnet },
   } = event;
-  const api = new InsightAPI(coinName, coinNet);
-  const data = await api.getBalance(address);
+
+  const rpc = new BlockRPC(coinName, coinNet);
+  const data = await rpc.getBlockCount();
+
   return {
     statusCode: 200,
     body: JSON.stringify(data),

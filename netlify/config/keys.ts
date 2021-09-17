@@ -17,3 +17,15 @@ export const INSIGHT_COIN_URL = {
     TESTNET: BITCORE_BASE_URL + "/DOGE/testnet",
   },
 };
+
+const RPC_RUL = (name) => `https://${name}.getblock.io`;
+export const RPC_COIN_URL = {
+  BTC: {
+    MAINNET: RPC_RUL("btc") + "/mainnet/",
+    TESTNET: RPC_RUL("btc") + "/testnet/",
+  },
+  DOGE: {
+    MAINNET: RPC_RUL("doge") + "/mainnet/",
+    TESTNET: RPC_RUL("doge") + "/testnet/",
+  },
+};

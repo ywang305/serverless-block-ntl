@@ -2,7 +2,7 @@ import { INSIGHT_COIN_URL } from "../../config/keys";
 
 import { validate } from "multicoin-address-validator";
 
-export const getBalanceBaseUrl = (address) => {
+export const getBalanceBaseUrl = (address: string) => {
   const testnet = "testnet";
   let baseURL;
   if (validate(address, "btc")) {
