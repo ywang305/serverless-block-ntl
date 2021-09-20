@@ -10,7 +10,7 @@ const _handler: Handler = async (event) => {
     queryStringParameters: {
       address,
       coinName,
-      coinNet = CoinNet.mainnet /**可选 [mainnet, testnet] */,
+      coinNet = CoinNet.mainnet /**可选 [mainnet, testnet] , 默认值 mainnet*/,
     },
   } = event;
   const api = new InsightAPI(coinName, coinNet);
