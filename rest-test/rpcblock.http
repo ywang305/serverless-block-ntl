@@ -1,0 +1,16 @@
+@hostname = localhost
+@port = 8888
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+
+@functions = .netlify/functions
+
+### get derived xpub and address
+POST http://{{host}}/{{functions}}/rpc
+    ?coinName=dot
+Content-Type: {{contentType}}
+
+{
+    "method": "rpc_methods",
+    "params": []
+}
