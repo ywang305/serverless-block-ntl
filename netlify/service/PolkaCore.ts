@@ -49,4 +49,11 @@ export class PolkaCore implements IApiClient {
     const latestHdr = await api.rpc.chain.getHeader();
     return latestHdr;
   }
+  async getBlockHash() {
+    const api = await this.getAPI();
+    const lastHdr = this.getHeader();
+    const startNum = (await lastHdr).number.unwrap().subn(400);
+    const startHdr = await api.rpc.chain.getBlockHash(startNum);
+    return startHdr;
+  }
 }

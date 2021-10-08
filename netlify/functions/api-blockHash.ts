@@ -6,8 +6,12 @@ import { IApiClient } from "../service/IApiClient";
 import { makeApiClient } from "../share/middle/makeApiClient";
 
 export const _handler: Handler = async (event) => {
-  const { apiClient, body } = event;
-  const data = await (apiClient as IApiClient).systemInfo();
+  const {
+    apiClient,
+    body,
+    queryStringParameters: { hash },
+  } = event;
+  const data = await (apiClient as IApiClient).getBlockHash(1000);
   return {
     statusCode: 200,
     body: JSON.stringify(data),
