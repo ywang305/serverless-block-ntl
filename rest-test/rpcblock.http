@@ -1,12 +1,23 @@
 @hostname = localhost
 @port = 8888
 @host = {{hostname}}:{{port}}
+
+@baseUrl = http://{{host}}/{{functions}}
 @contentType = application/json
 
 @functions = .netlify/functions
 
+### polka acct/balance
+POST {{baseUrl}}/api-account
+    ?apiName=polkadot
+    &address=16GgzE5VyibqPw7Dkh9aBZYJibME14rDrkPvZio1Zkt14zra
+
+### polka header
+POST {{baseUrl}}/api-header
+    ?apiName=polkadot
+
 ### get derived xpub and address
-POST http://{{host}}/{{functions}}/rpc
+POST {{baseUrl}}/rpc
     ?coinName=dot
 Content-Type: {{contentType}}
 
@@ -14,3 +25,4 @@ Content-Type: {{contentType}}
     "method": "rpc_methods",
     "params": []
 }
+
